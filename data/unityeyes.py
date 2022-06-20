@@ -7,7 +7,7 @@ from torch.utils.data import Dataset, DataLoader
 import json
 import glob
 import cv2
-from utilities.preprocess import preprocess_eye_image
+from preprocess import preprocess_eye_image
 
 class UnityEyesDataset(Dataset):
     """
@@ -28,7 +28,8 @@ class UnityEyesDataset(Dataset):
             index = index.tolist()
 
             full_image = cv2.imread(self.image_paths[index])
-
+            eye_sample = preprocess_eye_image(full_image)
             sample = {'full_image': full_image}
+            sample.update(eye_sample)
             return sample
 
